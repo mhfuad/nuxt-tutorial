@@ -1,0 +1,1 @@
+import{u as a,c as s,t,P as r,o as n}from"./cYGXKVsY.js";const p={__name:"[id]",setup(u){const o=a();return console.log(o.params.id),(e,i)=>(n(),s("div",null,"Event id : "+t((e._.provides[r]||e.$route).params.id),1))}};export{p as default};
