@@ -1,11 +1,14 @@
+<script setup>
+  const isSidebarVisible = ref(true);
+</script>
 <template>
     <div>
       <!-- ======= Header ======= -->
-      <DashboardHeader />
+      <DashboardHeader @toggle-sidebar="isSidebarVisible = $event" />
       <!-- End Header -->
 
       <!-- ======= Sidebar ======= -->
-      <DashboardSidebar />
+      <DashboardSidebar :isSidebarVisible="isSidebarVisible" />
       <!-- End Sidebar-->
 
       <!-- =========== main ======== -->

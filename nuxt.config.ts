@@ -22,7 +22,6 @@ export default defineNuxtConfig({
 
   ],
   app: {
-    baseURL: '/',
     head: {
       script: [
         { src: "/vendor/bootstrap/js/bootstrap.bundle.min.js", type: "text/javascript", defer: true },
@@ -30,6 +29,12 @@ export default defineNuxtConfig({
       ]
     }
   },
+  runtimeConfig: {
+    public: {
+      apiBase: process.env.NUXT_API_BASE,
+    },
+  },
+
 
   
 

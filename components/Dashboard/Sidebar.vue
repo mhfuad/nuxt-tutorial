@@ -33,9 +33,11 @@
     window.addEventListener("load", navbarlinksActive);
     window.addEventListener("scroll", navbarlinksActive);
   });
+
+  const props = defineProps(['isSidebarVisible'])
 </script>
 <template>
-    <aside id="sidebar" class="sidebar">
+    <aside id="sidebar" :class="{'d-none': !props.isSidebarVisible}" class="sidebar">
         <ul class="sidebar-nav" id="sidebar-nav">
             <li class="nav-item">
                 <NuxtLink class="nav-link collapsed" to="/">
@@ -53,6 +55,25 @@
                       <NuxtLink to="/user" class="nav-link collapsed" >
                           <i class="bi bi-person"></i>
                           <span>User</span>
+                      </NuxtLink>
+                    </li>
+                    <li>
+                      <NuxtLink to="/event" class="nav-link collapsed" >
+                          <i class="bi bi-person"></i>
+                          <span>Event</span>
+                      </NuxtLink>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#biodata-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-layout-text-window-reverse"></i><span>Biodata</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="biodata-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <li>
+                      <NuxtLink to="/biodata/personal" class="nav-link collapsed" >
+                          <i class="bi bi-person"></i>
+                          <span>Personal</span>
                       </NuxtLink>
                     </li>
                     <li>

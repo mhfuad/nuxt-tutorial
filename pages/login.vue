@@ -3,17 +3,22 @@
         layout: "auth"
     })
 
-    const username = ref("");
-    const password = ref("");
+    const username = ref("fuad@gmail.com");
+    const password = ref("123123");
     const errorMessage = ref("");
+    const loading = ref(false);
 
     const authStore = useAuthStore();
 
-    const loginUser = async () => {
+    const handleSubmit = async () => {
+      loading.value = true;
       try{
-        await authStore.login(username.value, password.value);
+        await authStore.login({username: username.value, password: password.value});
+        await navigateTo('/')
       } catch (error) {
         errorMessage.value = "Invalid username or password!";
+      } finally {
+        loading.value = false;
       }
     }
 </script>
@@ -25,7 +30,7 @@
             <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
 
               <div class="d-flex justify-content-center py-4">
-                <a href="index.html" class="logo d-flex align-items-center w-auto">
+                <a href="" class="logo d-flex align-items-center w-auto">
                   <!-- <img src="assets/img/logo.png" alt=""> -->
                   <span class="d-none d-lg-block">IMDB</span>
                 </a>
@@ -41,7 +46,7 @@
                   </div><!-- title close-->
 
                   <!-- form -->
-                  <form @submit.prevent="" class="row g-3 needs-validation" novalidate>
+                  <form @submit.prevent="handleSubmit" class="row g-3 needs-validation" novalidate>
                     <div class="col-12">
                       <label for="yourUsername" class="form-label">Username</label>
                       <div class="input-group has-validation">

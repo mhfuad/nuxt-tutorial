@@ -1,1 +1,0 @@
-import{c as n,a as t,o as r}from"./cYGXKVsY.js";import{_ as o}from"./DlAUqK2U.js";const s=""+new URL("background.AnIMfn8z.jpg",import.meta.url).href,a={};function c(l,e){return r(),n("div",null,e[0]||(e[0]=[t("h1",null,"Event vue",-1),t("img",{src:s,alt:"",height:"300",width:"150"},null,-1)]))}const f=o(a,[["render",c]]);export{f as default};

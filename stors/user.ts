@@ -1,4 +1,6 @@
-import { defineStore } from 'pinia'
+import { defineStore } from 'pinia';
+import { useRuntimeConfig } from "#imports";
+import { useAuthStore } from './auth';
 
 export const useUserStore = defineStore("users", {
     state: () => ({
@@ -8,9 +10,16 @@ export const useUserStore = defineStore("users", {
         users: (state) => state._users,
     },
     actions: {
-        async getUsers() {
+        async getUsers(page = 1, size = 20) {
+            const authStore = useAuthStore();
+            const accessToken = authStore.accessToken;
             try {
-                const response = await fetch("https://64a3ffc3c3b509573b56e5f8.mockapi.io/api/v1/users");
+                const config = useRuntimeConfig();
+                const response = await fetch(`${config.public.apiBase}/user?page=${page - 1}&size=${size}`, {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`, // Add Authorization header
+                    },
+                });
                 if (!response.ok) {
                     throw new Error(`Error: ${response.status}`);
                 }

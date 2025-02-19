@@ -1,4 +1,43 @@
 
+<script setup>
+    //import { defineEmits } from 'vue';
+    const authStore = useAuthStore();
+
+    const isSidebarVisible = ref(true);
+    const emit = defineEmits(['toggle-sidebar']);
+
+    const toggleSidebar = () => {
+        isSidebarVisible.value = !isSidebarVisible.value;
+        emit('toggle-sidebar', isSidebarVisible.value)
+    };
+
+    onMounted( ()=>{
+        const select = (selector, all = false) => {
+            if (all) {
+                return document.querySelectorAll(selector);
+            }
+            return document.querySelector(selector);
+        };
+
+        // let selectHeader = select('#header')
+        // if (selectHeader) {
+        //     const headerScrolled = () => {
+        //     if (window.scrollY > 100) {
+        //         selectHeader.classList.add('header-scrolled')
+        //     } else {
+        //         selectHeader.classList.remove('header-scrolled')
+        //     }
+        //     }
+        //     window.addEventListener('load', headerScrolled)
+        //     onscroll(document, headerScrolled)
+        // }
+    })
+    const handleLogout = async () => {
+        const username = authStore.user.username;
+        await authStore.logout(username)
+        await navigateTo('/login')
+    }
+</script>
 <template>
     <header id="header" class="header fixed-top d-flex align-items-center">
         <div class="d-flex align-items-center justify-content-between">
@@ -6,7 +45,7 @@
                 <img src="~/public/img/logo.png" alt="">
                 <span class="d-none d-lg-block">IMDB</span>
             </a>
-            <i class="bi bi-list toggle-sidebar-btn"></i>
+            <i @click="toggleSidebar" class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
 
         <div class="search-bar">
@@ -170,13 +209,13 @@
 
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                     <img src="~/public/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-                    <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+                    <span class="d-none d-md-block dropdown-toggle ps-2">{{ authStore.user.firstName +" "+ authStore.user.lastName }}</span>
                 </a><!-- End Profile Iamge Icon -->
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                     <li class="dropdown-header">
-                    <h6>Kevin Anderson</h6>
-                    <span>Web Designer</span>
+                    <h6>{{ authStore.user.firstName +" "+ authStore.user.lastName }}</h6>
+                    <span>{{ authStore.user.username}}</span>
                     </li>
                     <li>
                     <hr class="dropdown-divider">
@@ -213,7 +252,7 @@
                     </li>
 
                     <li>
-                    <a class="dropdown-item d-flex align-items-center" href="#">
+                    <a @click="handleLogout" class="dropdown-item d-flex align-items-center" href="#">
                         <i class="bi bi-box-arrow-right"></i>
                         <span>Sign Out</span>
                     </a>
@@ -226,27 +265,3 @@
         </nav><!-- End Icons Navigation -->
     </header>
 </template>
-
-<script setup>
-    onMounted( ()=>{
-        const select = (selector, all = false) => {
-            if (all) {
-            return document.querySelectorAll(selector);
-            }
-            return document.querySelector(selector);
-        };
-
-        // let selectHeader = select('#header')
-        // if (selectHeader) {
-        //     const headerScrolled = () => {
-        //     if (window.scrollY > 100) {
-        //         selectHeader.classList.add('header-scrolled')
-        //     } else {
-        //         selectHeader.classList.remove('header-scrolled')
-        //     }
-        //     }
-        //     window.addEventListener('load', headerScrolled)
-        //     onscroll(document, headerScrolled)
-        // }
-    })
-</script>
